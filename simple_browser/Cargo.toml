@@ -1,8 +1,0 @@
-[package]
-name = "simple_browser"
-version = "0.1.0"
-edition = "2024"
-
-[dependencies]
-tao = "0.34.0"
-wry = "0.52.1"

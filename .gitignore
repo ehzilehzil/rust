@@ -1,21 +1,35 @@
-# Rust 빌드 산출물
-/target/
-**/target/
-
 # Cargo 관련
-**/*.rs.bk
-**/Cargo.lock  # 라이브러리 크레이트일 경우만 (실행 파일이면 포함시키세요)
+/target/
+/Cargo.lock
 
-# IDE 및 편집기 관련
+# 빌드 아티팩트
+**/*.rlib
+**/*.rmeta
+
+# 테스트 결과
+*.dSYM/
+*.stackdump
+
+# IDE 및 편집기 설정
 .idea/
 .vscode/
 *.swp
 *.swo
 
-# OS별 파일
-.DS_Store
-Thumbs.db
+# 로그 및 임시 파일
+*.log
+*.tmp
 
-# 테스트 및 툴 관련
-**/mutants.out*/
-*.pdb  # MSVC 디버그 정보
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Linux
+*~
+
+# 기타
+node_modules/
