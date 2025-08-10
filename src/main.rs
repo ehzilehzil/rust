@@ -1,6 +1,7 @@
 use tao::{
-    dpi::*, event::*, event_loop::*, platform::windows::WindowExtWindows, window::*
+    dpi::*, event::*, event_loop::*, window::*
 };
+use wry::*;
 
 fn main() {
     let event_loop = EventLoop::new();
@@ -11,7 +12,23 @@ fn main() {
         .with_maximized(true)
         .build(&event_loop)
         .expect("윈도우 생성 실패");
-    let _hwnd = window.hwnd();
+    let main_view = WebViewBuilder::new()
+        .with_bounds(Rect {
+            position: Position::Physical(PhysicalPosition { x: 0, y: 120 }),
+            size: Size::Physical(PhysicalSize { width: window.inner_size().width, height: window.inner_size().height - 120 }),
+        })
+        .with_url("https://google.com")
+        .build_as_child(&window)
+        .expect("메인 웹뷰 생성 실패");
+    let sub_view = WebViewBuilder::new()
+        .with_bounds(Rect {
+            position: Position::Physical(PhysicalPosition { x: 0, y: 0 }),
+            size: Size::Physical(PhysicalSize { width: window.inner_size().width, height: 120 }),
+        })
+        .with_html(include_str!("sub_view.html"))
+        .build_as_child(&window)
+        .expect("서브 웹뷰 생성 실패");
+
 
     event_loop.run(move |event, _event_loop, control_flow| {
         *control_flow = ControlFlow::Wait;
@@ -19,6 +36,20 @@ fn main() {
         match event {
             Event::WindowEvent { event: WindowEvent::CloseRequested, .. } => {
                 *control_flow = ControlFlow::Exit;
+            },
+            Event::WindowEvent { event: WindowEvent::Resized(size), .. } => {
+                let width = size.width;
+                let height = size.height;
+
+                main_view.set_bounds(Rect {
+                    position: Position::Physical(PhysicalPosition { x: 0, y: 120 }),
+                    size: Size::Physical(PhysicalSize { width: width, height: height - 120 }),
+                }).unwrap();
+                sub_view.set_bounds(Rect {
+                    position: Position::Physical(PhysicalPosition { x: 0, y: 0 }),
+                    size: Size::Physical(PhysicalSize { width: width, height: 120 }),
+                }).unwrap();
+                
             },
             Event::RedrawRequested(_window_id) => {
                 // println!("wow!");
