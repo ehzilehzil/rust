@@ -1,3 +1,5 @@
+<!-- UNOCss https://unocss.dev/play/ 에서 적당히 편집해서 업어옴-->
+
 <form id="form">
     <div class="fixed top-0 right-0 bottom-0 left-0 pr-4 pl-4">
         <div class="flex h-full w-full items-center justify-between gap-x-4">
@@ -11,7 +13,8 @@
     const input = document.getElementById("input");
     document.getElementById("form").addEventListener("submit", (e) => {
         e.preventDefault();
-        console.log(input.value);
+        // console.log(input.value);
+        window.ipc.postMessage(input.value);
     });
 </script>
 
