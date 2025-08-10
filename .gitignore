@@ -1,0 +1,21 @@
+# Rust 빌드 산출물
+/target/
+**/target/
+
+# Cargo 관련
+**/*.rs.bk
+**/Cargo.lock  # 라이브러리 크레이트일 경우만 (실행 파일이면 포함시키세요)
+
+# IDE 및 편집기 관련
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS별 파일
+.DS_Store
+Thumbs.db
+
+# 테스트 및 툴 관련
+**/mutants.out*/
+*.pdb  # MSVC 디버그 정보
